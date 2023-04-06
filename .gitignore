@@ -1,4 +1,3 @@
-/node_modules
-npm-debug.log
-.DS_Store
-/*.env
+##node for frontend react app
+
+/home/leo/github/ricircola/4.Production/frontend-ricircola/node_modules
