@@ -19,10 +19,9 @@ app.post('/query', function (request, response) {
     const received_JSON = request.body;                                         // the received JSON
     console.log("POST request received", received_JSON);
 
-    received_JSON.km=JSON.parse(received_JSON.km)                               // convert the string to a number
-    received_JSON.videoPerizia=JSON.parse(received_JSON.videoPerizia)           // convert the string to a boolean
-    received_JSON.stampaPerizia=JSON.parse(received_JSON.stampaPerizia)          // convert the string to a boolean
-
+    received_JSON.km = JSON.parse(received_JSON.km)                               // convert the string to a number
+    received_JSON.videoPerizia = JSON.parse(received_JSON.videoPerizia)           // convert the string to a boolean
+    received_JSON.stampaPerizia = JSON.parse(received_JSON.stampaPerizia)          // convert the string to a boolean
 
     const errors = [];
 
@@ -30,7 +29,7 @@ app.post('/query', function (request, response) {
     if (received_JSON.videoPerizia === undefined) errors.push("[videoPerizia] is a mandatory parameter");
     if (received_JSON.stampaPerizia === undefined) errors.push("[stampaPerizia] is a mandatory parameter");
     if (received_JSON.carType === undefined) errors.push("[carType] is a mandatory parameter");
-    
+
     if (errors.length > 0) {
         response.send({
             error: true,
@@ -40,20 +39,23 @@ app.post('/query', function (request, response) {
     }
 
     // call the algorithm and get the result
-    const socImpact = alg.totalSocialImpact( {km_distance: received_JSON.km, is_videoperizia: received_JSON.videoPerizia} )                   
+    const socImpact = alg.totalSocialImpact({ km_distance: received_JSON.km, is_videoperizia: received_JSON.videoPerizia })
     const envImpact = alg.totalEnvironmentalImpact(
         {
-            km_distance: received_JSON.km, 
+            km_distance: received_JSON.km,
             is_videoperizia: received_JSON.videoPerizia,
             car_type: received_JSON.carType,
             is_perizia_printed: received_JSON.stampaPerizia
-        })                    
-    const totImpact = alg.totalImpact( { total_enviromental_impact: envImpact, total_social_impact: socImpact } )                     
+        })
+    const totImpact = alg.totalImpact({ total_enviromental_impact: envImpact, total_social_impact: socImpact })
+    const savedImpact = alg.savedImpact({ total_enviromental_impact: envImpact, total_social_impact: socImpact, km_distance: received_JSON.km, car_type: received_JSON.carType, is_videoperizia: received_JSON.videoPerizia })
+
     let my_response = {                                                        // create a response object 
         "received_JSON": received_JSON,
         "socImpact": socImpact,
         "envImpact": envImpact,
-        "totImpact": totImpact
+        "totImpact": totImpact,
+        "savedImpact": savedImpact,
     };
     response.send(my_response);	                                                // echo the result back
 });

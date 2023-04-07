@@ -7,8 +7,10 @@ const constants = require('./constants');
 // ----------------------------------------- SOCIAL -----------------------------------------
 function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
     let euro_value = 0;
-    if (!is_videoperizia) euro_value += impact.socialImpactCO2Accidents(km_distance) + impact.socialImpactCarPollution();
-    var co2_value = impact.converterEuroToCo2(euro_value).toFixed(2);
+    if (!is_videoperizia && km_distance!=0) euro_value += impact.socialImpactCO2Accidents(km_distance) + impact.socialImpactCarPollution();
+    var co2_value = impact.converterEuroToCo2(euro_value)
+    co2_value = toFixedNumber(co2_value);
+    euro_value = toFixedNumber(euro_value);
     return {
         name: "Step6_soc",
         values: {
@@ -27,8 +29,8 @@ function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
 function CalculateStep1_env() {
     var euro_value = impact.enviromentalImpactPhoneCall("smartphone", "smartphone", (15 / 60));
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -46,8 +48,8 @@ function CalculateStep2_env({ device_compagnia = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60))
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -65,8 +67,8 @@ function CalculateStep3_env({ device_compagnia = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60));
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -84,8 +86,8 @@ function CalculateStep4_env({ device_perito = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60))
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -100,8 +102,8 @@ function CalculateStep4_env({ device_perito = ["desktop", "laptop"] } = {}) {
 function CalculateStep5_env() {
     var euro_value = impact.enviromentalImpactPhoneCall("smartphone", "smartphone", (2 / 60));
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -113,7 +115,7 @@ function CalculateStep5_env() {
     }
 }
 
-function CalculateStep6_env(
+function    CalculateStep6_env(
     {
         km_distance,
         car_type,
@@ -124,10 +126,12 @@ function CalculateStep6_env(
 
     let euro_value = 0;
     if (is_videoperizia) euro_value += impact.enviromentalImpactVideoCall(device_perito, device_assicurato, (15 / 60));
-    else euro_value += impact.enviromentalImpactCarPollution(km_distance, car_type);
+    else
+        if (km_distance != 0) euro_value += impact.enviromentalImpactCarPollution(km_distance, car_type);
+
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -145,8 +149,8 @@ function CalculateStep7_env({ device_perito = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, 1);
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -162,8 +166,8 @@ function CalculateStep8_env({ is_perizia_printed = true } = {}) {
     let euro_value = 0;
     if (is_perizia_printed) euro_value += impact.environmentalImpactPaperDisposal();
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -181,8 +185,8 @@ function CalculateStep9_env({ device_perito = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60))
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
-    euro_value = parseFloat(euro_value).toFixed(2)
-    co2_value = parseFloat(co2_value).toFixed(2)
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         values: {
             co2_value,
@@ -202,13 +206,17 @@ function CalculateTotalFromStepsList({ steps_list }) {
         const step = steps_list[index].values;
         euro_value += step.euro_value;
         co2_value += step.co2_value;
-        euro_value = parseFloat(euro_value).toFixed(2)
-        co2_value = parseFloat(co2_value).toFixed(2)
     }
+    euro_value = toFixedNumber(parseFloat(euro_value))
+    co2_value = toFixedNumber(parseFloat(co2_value))
     return {
         euro_value,
         co2_value
     }
+}
+
+function toFixedNumber(number) {
+    return Math.round(number * 100) / 100;;
 }
 
 
@@ -223,5 +231,6 @@ module.exports = {
     CalculateStep7_env,
     CalculateStep8_env,
     CalculateStep9_env,
-    CalculateTotalFromStepsList
+    CalculateTotalFromStepsList,
+    toFixedNumber
 }
