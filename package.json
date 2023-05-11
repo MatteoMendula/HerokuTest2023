@@ -1,6 +1,6 @@
 {
-  "name": "express_template",
-  "version": "1.0.0",
+  "name": "ricircola_production",
+  "version": "0.0.2",
   "description": "",
   "main": "app.js",
   "scripts": {
