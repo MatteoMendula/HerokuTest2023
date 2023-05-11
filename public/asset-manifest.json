@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.10a27b17.css",
-    "main.js": "/static/js/main.92dda936.js",
+    "main.js": "/static/js/main.2c37c1b8.js",
     "static/js/787.70f403b9.chunk.js": "/static/js/787.70f403b9.chunk.js",
     "static/media/ricircola_title.png": "/static/media/ricircola_title.d0dedb58c6b6148c6694.png",
     "static/media/leafcropped.svg": "/static/media/leafcropped.68a51ca7f05410566aec8af2377f0bd7.svg",
     "index.html": "/index.html",
     "main.10a27b17.css.map": "/static/css/main.10a27b17.css.map",
-    "main.92dda936.js.map": "/static/js/main.92dda936.js.map",
+    "main.2c37c1b8.js.map": "/static/js/main.2c37c1b8.js.map",
     "787.70f403b9.chunk.js.map": "/static/js/787.70f403b9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.10a27b17.css",
-    "static/js/main.92dda936.js"
+    "static/js/main.2c37c1b8.js"
   ]
 }
