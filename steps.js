@@ -9,6 +9,7 @@ function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
     let euro_value = 0;
     if (!is_videoperizia && km_distance!=0) euro_value += impact.socialImpactCO2Accidents(km_distance) + impact.socialImpactCarPollution();
     var co2_value = impact.converterEuroToCo2(euro_value)
+    co2_value= impact.convertFromGramsToKg(co2_value)
     co2_value = toFixedNumber(co2_value);
     euro_value = toFixedNumber(euro_value);
     return {
@@ -17,7 +18,7 @@ function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
             co2_value,
             euro_value,
         },
-        type: is_videoperizia ? constants.NONE_TYPE : "car",
+        type: is_videoperizia ? " " : "car",
         impact: "social",
         note: "6b. perito si sposta nella casa dell'assicurato "
     };
@@ -29,6 +30,7 @@ function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
 function CalculateStep1_env() {
     var euro_value = impact.enviromentalImpactPhoneCall("smartphone", "smartphone", (15 / 60));
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -48,6 +50,7 @@ function CalculateStep2_env({ device_compagnia = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60))
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -67,6 +70,7 @@ function CalculateStep3_env({ device_compagnia = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60));
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -86,6 +90,7 @@ function CalculateStep4_env({ device_perito = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60))
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -102,6 +107,7 @@ function CalculateStep4_env({ device_perito = ["desktop", "laptop"] } = {}) {
 function CalculateStep5_env() {
     var euro_value = impact.enviromentalImpactPhoneCall("smartphone", "smartphone", (2 / 60));
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -130,6 +136,7 @@ function    CalculateStep6_env(
         if (km_distance != 0) euro_value += impact.enviromentalImpactCarPollution(km_distance, car_type);
 
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -149,6 +156,7 @@ function CalculateStep7_env({ device_perito = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, 1);
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -166,6 +174,7 @@ function CalculateStep8_env({ is_perizia_printed = true } = {}) {
     let euro_value = 0;
     if (is_perizia_printed) euro_value += impact.environmentalImpactPaperDisposal();
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -185,6 +194,7 @@ function CalculateStep9_env({ device_perito = ["desktop", "laptop"] } = {}) {
         euro_value += impact.enviromentalImpactDevice(d, (15 / 60))
     }
     var co2_value = impact.converterEuroToCo2(euro_value);
+    co2_value= impact.convertFromGramsToKg(co2_value)
     euro_value = toFixedNumber(parseFloat(euro_value))
     co2_value = toFixedNumber(parseFloat(co2_value))
     return {
@@ -216,7 +226,9 @@ function CalculateTotalFromStepsList({ steps_list }) {
 }
 
 function toFixedNumber(number) {
-    return Math.round(number * 100) / 100;;
+    if(number<1) number= Math.round(number * 1000) / 1000; //round with 2 decimals
+    else number= Math.round(number); //roud up
+    return number;
 }
 
 

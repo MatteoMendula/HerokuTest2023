@@ -90,6 +90,10 @@ function converterEuroToCo2(impact) {
   return impact / CO2_COST;
 }
 
+function convertFromGramsToKg(impact) {
+  return impact / 1000;
+}
+
 
 
 
@@ -104,5 +108,6 @@ module.exports = {
   enviromentalImpactVideoCall,
   enviromentalImpactPhoneCall,
   converterCo2ToEuro,
-  converterEuroToCo2
+  converterEuroToCo2,
+  convertFromGramsToKg
 };

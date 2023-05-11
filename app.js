@@ -19,7 +19,8 @@ app.post('/query', function (request, response) {
     const received_JSON = request.body;                                         // the received JSON
     console.log("POST request received", received_JSON);
 
-    received_JSON.km = JSON.parse(received_JSON.km)                               // convert the string to a number
+    received_JSON.km = JSON.parse(received_JSON.km)                             // convert the string to a number
+    received_JSON.km = received_JSON.km * 2                                      // get total distance of the trip
     received_JSON.videoPerizia = JSON.parse(received_JSON.videoPerizia)           // convert the string to a boolean
     received_JSON.stampaPerizia = JSON.parse(received_JSON.stampaPerizia)          // convert the string to a boolean
 
@@ -49,14 +50,17 @@ app.post('/query', function (request, response) {
         })
     const totImpact = alg.totalImpact({ total_enviromental_impact: envImpact, total_social_impact: socImpact })
     const savedImpact = alg.savedImpact({ total_enviromental_impact: envImpact, total_social_impact: socImpact, km_distance: received_JSON.km, car_type: received_JSON.carType, is_videoperizia: received_JSON.videoPerizia })
-
+    const worstImpact = alg.worstImpact({ km_distance: received_JSON.km, car_type: received_JSON.carType, is_videoperizia: received_JSON.videoPerizia })
     let my_response = {                                                        // create a response object 
         "received_JSON": received_JSON,
         "socImpact": socImpact,
         "envImpact": envImpact,
         "totImpact": totImpact,
+        "worstImpact": worstImpact,
         "savedImpact": savedImpact,
     };
+    console.log("POST response sent", my_response);
+    console.log(worstImpact);
     response.send(my_response);	                                                // echo the result back
 });
 

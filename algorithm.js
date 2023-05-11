@@ -70,8 +70,8 @@ function savedImpact({ total_enviromental_impact, total_social_impact, km_distan
 
   //calculate actual impact
   total_impact_actual = totalImpact({ total_enviromental_impact: total_enviromental_impact, total_social_impact: total_social_impact })
-  //calculate worst case impact
 
+  //calculate worst case impact
   totEnv = totalEnvironmentalImpact({
     km_distance: km_distance,
     is_videoperizia: false,
@@ -83,7 +83,6 @@ function savedImpact({ total_enviromental_impact, total_social_impact, km_distan
 
 
   total_impact_worst_case = totalImpact({ total_enviromental_impact: totEnv, total_social_impact: totSoc })
-  // console.log(total_impact_worst_case)
   totalEuroSaved = total_impact_worst_case.values.euro_value - total_impact_actual.values.euro_value
   totalCo2Saved = total_impact_worst_case.values.co2_value - total_impact_actual.values.co2_value
 
@@ -102,6 +101,28 @@ function savedImpact({ total_enviromental_impact, total_social_impact, km_distan
     }
   }
 }
+
+function worstImpact({ km_distance, car_type, is_videoperizia }) {
+
+  //calculate worst case impact
+  envImpact = totalEnvironmentalImpact({
+    km_distance: km_distance,
+    is_videoperizia: false,
+    car_type: (!is_videoperizia ? 'benzina' : car_type), //se non ha fatto la videoperizia allora calcolo il caso peggiore nel caso avesse usato la macchina a benzina, altrimenti calcolo il caso nel caso avesse usato la sua macchina
+    is_perizia_printed: true
+  })
+
+  socImpact = totalSocialImpact({ km_distance: km_distance, is_videoperizia: false })
+
+  totImpact = totalImpact({ total_enviromental_impact: totEnv, total_social_impact: totSoc })
+
+  return {
+    socImpact,
+    envImpact,
+    totImpact
+  }
+}
+
 
 
 function stepsListAll(
@@ -122,4 +143,5 @@ module.exports = {
   totalEnvironmentalImpact,
   totalImpact,
   savedImpact,
+  worstImpact,
 };
