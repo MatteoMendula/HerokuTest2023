@@ -1,8 +1,4 @@
 const impact = require('./impact_functions');
-const constants = require('./constants');
-//1. assicurato contatta la compagnia di assicurazione
-//2. call center si connette ad internet
-
 
 // ----------------------------------------- SOCIAL -----------------------------------------
 function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
@@ -20,13 +16,11 @@ function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
         },
         type: is_videoperizia ? " " : "car",
         impact: "social",
-        note: "6b. perito si sposta nella casa dell'assicurato "
+        note: "details_6b"
     };
 }
 
 // -------------------------------------- ENVIROMENTAL --------------------------------------
-
-//1. assicurato contatta la compagnia di assicurazione
 function CalculateStep1_env() {
     var euro_value = impact.enviromentalImpactPhoneCall("smartphone", "smartphone", (15 / 60));
     var co2_value = impact.converterEuroToCo2(euro_value);
@@ -38,9 +32,9 @@ function CalculateStep1_env() {
             co2_value,
             euro_value,
         },
-        type: "phone-call",
+        type: "phone_call",
         impact: "enviromental",
-        note: "1. assicurato contatta la compagnia di assicurazione"
+        note: "details_1"
     };
 }
 
@@ -58,9 +52,9 @@ function CalculateStep2_env({ device_compagnia = ["desktop", "laptop"] } = {}) {
             co2_value,
             euro_value,
         },
-        type: "device-with-internet",
+        type: "device_with_internet",
         impact: "enviromental",
-        note: "2. call center si connette ad internet"
+        note: "details_2"
     };
 }
 
@@ -80,7 +74,7 @@ function CalculateStep3_env({ device_compagnia = ["desktop", "laptop"] } = {}) {
         },
         type: "device",
         impact: "enviromental",
-        note: "3. lettura dei documenti"
+        note: "details_3"
     };
 }
 
@@ -98,9 +92,9 @@ function CalculateStep4_env({ device_perito = ["desktop", "laptop"] } = {}) {
             co2_value,
             euro_value,
         },
-        type: "device-with-internet",
+        type: "device_with_internet",
         impact: "enviromental",
-        note: "4. lo studio peritale scarica l'incarico dal portale della compagnia"
+        note: "details_4"
     };
 }
 
@@ -115,9 +109,9 @@ function CalculateStep5_env() {
             co2_value,
             euro_value,
         },
-        type: "phone-call",
+        type: "phone_call",
         impact: "enviromental",
-        note: "5. contattare assicurato per fissare sopralluogo"
+        note: "details_5"
     }
 }
 
@@ -144,9 +138,9 @@ function    CalculateStep6_env(
             co2_value,
             euro_value,
         },
-        type: is_videoperizia ? "video-call" : "car",
+        type: is_videoperizia ? "video_call" : "car",
         impact: "enviromental",
-        note: "6. sopralluogo"
+        note: "details_6"
     };
 }
 
@@ -166,7 +160,7 @@ function CalculateStep7_env({ device_perito = ["desktop", "laptop"] } = {}) {
         },
         type: "device",
         impact: "enviromental",
-        note: "7. perito redige la relazione di perizia"
+        note: "details_7"
     };
 }
 
@@ -184,7 +178,7 @@ function CalculateStep8_env({ is_perizia_printed = true } = {}) {
         },
         type: "paper",
         impact: "enviromental",
-        note: "8. stampa delle CGA, Polizza e relazione"
+        note: "details_8"
     };
 }
 
@@ -202,9 +196,9 @@ function CalculateStep9_env({ device_perito = ["desktop", "laptop"] } = {}) {
             co2_value,
             euro_value,
         },
-        type: "device-with-internet",
+        type: "device_with_internet",
         impact: "enviromental",
-        note: "9. invio della relazione alla compagnia di assicurazione"
+        note: "details_9"
     };
 }
 
