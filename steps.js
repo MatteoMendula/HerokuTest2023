@@ -14,7 +14,7 @@ function CalculateStep6_soc({ km_distance, is_videoperizia = false } = {}) {
             co2_value,
             euro_value,
         },
-        type: is_videoperizia ? " " : "car",
+        type: is_videoperizia ? " " : "vehicle",
         impact: "social",
         note: "details_6b"
     };
@@ -138,7 +138,7 @@ function    CalculateStep6_env(
             co2_value,
             euro_value,
         },
-        type: is_videoperizia ? "video_call" : "car",
+        type: is_videoperizia ? "video_call" : "vehicle",
         impact: "enviromental",
         note: "details_6"
     };
